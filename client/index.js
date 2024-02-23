@@ -15,7 +15,7 @@ const SimplePeer = require('simple-peer')
 
 const util = require('./util')
 
-global.WEBTORRENT_ANNOUNCE = createTorrent.announceList
+globalThis.WEBTORRENT_ANNOUNCE = createTorrent.announceList
   .map(function (arr) {
     return arr[0]
   })
@@ -88,6 +88,11 @@ function init () {
   // Register a protocol handler for "magnet:" (will prompt the user)
   if ('registerProtocolHandler' in navigator) {
     navigator.registerProtocolHandler('magnet', window.location.origin + '#%s', 'Instant.io')
+  }
+
+  // Register a service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
   }
 }
 
